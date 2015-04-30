@@ -17,7 +17,9 @@ import org.apache.commons.vfs2.provider.sftp.SftpFileSystemConfigBuilder;
 
 /**
  *
- * @author salim
+ * @author salim file to download: 32868.jpg
+ * 
+ * http://www.mysamplecode.com/2013/06/sftp-apache-commons-file-download.html
  */
 public class SendMyFiles {
 
@@ -26,14 +28,17 @@ public class SendMyFiles {
     public static void main(String[] args) {
 
         SendMyFiles sendMyFiles = new SendMyFiles();
-        if (args.length < 1) {
-            System.err.println("Usage: java " + sendMyFiles.getClass().getName()
-                    + " Properties_file File_To_FTP ");
-            System.exit(1);
-        }
+//        if (args.length < 1) {
+//            System.err.println("Usage: java " + sendMyFiles.getClass().getName()
+//                    + " Properties_file File_To_FTP ");
+//            System.exit(1);
+//        }
 
-        String propertiesFile = args[0].trim();
-        String fileToFTP = args[1].trim();
+        String propertiesFile;
+        String fileToFTP;
+
+        propertiesFile = "properties";
+        fileToFTP = "fcb.jpeg";//32868.jpg";
         sendMyFiles.startFTP(propertiesFile, fileToFTP);
 
     }
@@ -43,15 +48,20 @@ public class SendMyFiles {
         props = new Properties();
         StandardFileSystemManager manager = new StandardFileSystemManager();
         try {
-            props.load(new FileInputStream("properties/" + propertiesFilename));
+            props.load(new FileInputStream("./src/properties/" + propertiesFilename));
             String serverAddress = props.getProperty("serverAddress").trim();
             String userId = props.getProperty("userId").trim();
             String password = props.getProperty("password").trim();
             String remoteDirectory = props.getProperty("remoteDirectory").trim();
             String localDirectory = props.getProperty("localDirectory").trim();
-
+            System.out.println("properties are fetched:serverAddress=" + serverAddress);
+            System.out.println("userId=" + userId);
+            System.out.println("password=" + password);
+            System.out.println("remoteDirectory=" + remoteDirectory);
+            System.out.println("localDirectory=" + localDirectory);
             //check if the file exists
             String filepath = localDirectory + fileToFTP;
+            System.out.println("filepath:" + filepath);
             File file = new File(filepath);
             if (!file.exists()) {
                 throw new RuntimeException("Error. Local file not found");
@@ -70,7 +80,7 @@ public class SendMyFiles {
             //Create the SFTP URI using the host name, userid, password,  remote path and file name
             String sftpUri = "sftp://" + userId + ":" + password + "@" + serverAddress + "/"
                     + remoteDirectory + fileToFTP;
-
+            System.out.println("uri: " + sftpUri);
             // Create local file object
             FileObject localFile = manager.resolveFile(file.getAbsolutePath());
 
