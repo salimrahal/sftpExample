@@ -35,7 +35,7 @@ public class GetMyFiles {
         String propertiesFilename = args[0].trim();
         String fileToDownload = args[1].trim();
                 */
-        String propertiesFilename = "~/sftpProp";
+        String propertiesFilename = "/sftpProp";
         String fileToDownload = "fcb";//32868.jpg";
         getMyFiles.startFTP(propertiesFilename, fileToDownload);
 
@@ -48,7 +48,7 @@ public class GetMyFiles {
 
         try {
 
-            props.load(new FileInputStream("/home/pascalfares/" + propertiesFilename));
+            props.load(new FileInputStream(System.getProperty("user.home") + propertiesFilename));
             String serverAddress = props.getProperty("serverAddress").trim();
             String userId = props.getProperty("userId").trim();
             String password = props.getProperty("password").trim();

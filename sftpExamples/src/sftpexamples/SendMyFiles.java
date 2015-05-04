@@ -37,7 +37,7 @@ public class SendMyFiles {
         String propertiesFile;
         String fileToFTP;
 
-        propertiesFile = "~/sftpProp";
+        propertiesFile = "/sftpProp";
         fileToFTP = "fcb.jpeg";//32868.jpg";
         sendMyFiles.startFTP(propertiesFile, fileToFTP);
 
@@ -48,7 +48,7 @@ public class SendMyFiles {
         props = new Properties();
         StandardFileSystemManager manager = new StandardFileSystemManager();
         try {
-            props.load(new FileInputStream("/home/pascalfares/" + propertiesFilename));
+            props.load(new FileInputStream(System.getProperty("user.home") + propertiesFilename));
             //props.setProperty("serverAddress", "127.0.0.1");
             String serverAddress = props.getProperty("serverAddress").trim();
             String userId = props.getProperty("userId").trim();
