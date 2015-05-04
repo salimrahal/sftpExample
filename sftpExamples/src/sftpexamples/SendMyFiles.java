@@ -37,7 +37,7 @@ public class SendMyFiles {
         String propertiesFile;
         String fileToFTP;
 
-        propertiesFile = "properties";
+        propertiesFile = "/sftpProp";
         fileToFTP = "fcb.jpeg";//32868.jpg";
         sendMyFiles.startFTP(propertiesFile, fileToFTP);
 
@@ -48,7 +48,8 @@ public class SendMyFiles {
         props = new Properties();
         StandardFileSystemManager manager = new StandardFileSystemManager();
         try {
-            props.load(new FileInputStream("./src/properties/" + propertiesFilename));
+            props.load(new FileInputStream(System.getProperty("user.home") + propertiesFilename));
+            //props.setProperty("serverAddress", "127.0.0.1");
             String serverAddress = props.getProperty("serverAddress").trim();
             String userId = props.getProperty("userId").trim();
             String password = props.getProperty("password").trim();
@@ -78,8 +79,7 @@ public class SendMyFiles {
             SftpFileSystemConfigBuilder.getInstance().setTimeout(opts, 10000);
 
             //Create the SFTP URI using the host name, userid, password,  remote path and file name
-            String sftpUri = "sftp://" + userId + ":" + password + "@" + serverAddress + "/"
-                    + remoteDirectory + fileToFTP;
+            String sftpUri = "sftp://" + userId + ":" + password + "@" + serverAddress + "/" + fileToFTP;
             System.out.println("uri: " + sftpUri);
             // Create local file object
             FileObject localFile = manager.resolveFile(file.getAbsolutePath());
