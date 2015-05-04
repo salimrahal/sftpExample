@@ -25,6 +25,7 @@ public class GetMyFiles {
     public static void main(String[] args) {
 
         GetMyFiles getMyFiles = new GetMyFiles();
+        /*
         if (args.length < 1) {
             System.err.println("Usage: java " + getMyFiles.getClass().getName()
                     + " Properties_filename File_To_Download ");
@@ -33,6 +34,9 @@ public class GetMyFiles {
 
         String propertiesFilename = args[0].trim();
         String fileToDownload = args[1].trim();
+                */
+        String propertiesFilename = "~/sftpProp";
+        String fileToDownload = "fcb";//32868.jpg";
         getMyFiles.startFTP(propertiesFilename, fileToDownload);
 
     }
@@ -44,7 +48,7 @@ public class GetMyFiles {
 
         try {
 
-            props.load(new FileInputStream("properties/" + propertiesFilename));
+            props.load(new FileInputStream("/home/pascalfares/" + propertiesFilename));
             String serverAddress = props.getProperty("serverAddress").trim();
             String userId = props.getProperty("userId").trim();
             String password = props.getProperty("password").trim();
@@ -62,9 +66,10 @@ public class GetMyFiles {
             SftpFileSystemConfigBuilder.getInstance().setTimeout(opts, 10000);
 
             //Create the SFTP URI using the host name, userid, password,  remote path and file name
-            String sftpUri = "sftp://" + userId + ":" + password + "@" + serverAddress + "/"
-                    + remoteDirectory + fileToDownload;
-
+            //String sftpUri = "sftp://" + userId + ":" + password + "@" + serverAddress 
+            //      + "/" + remoteDirectory + fileToDownload;
+            String sftpUri = "sftp://" + userId + ":" + password + "@" + serverAddress 
+                 + "/" + fileToDownload;
             // Create local file object
             String filepath = localDirectory + fileToDownload;
             File file = new File(filepath);

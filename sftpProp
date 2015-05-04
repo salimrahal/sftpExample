@@ -1,0 +1,5 @@
+serverAddress=10.130.2.1
+userId=scan
+password=scan00
+remoteDirectory=/root/
+localDirectory=/home/pascalfares/l/
